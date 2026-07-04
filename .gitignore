@@ -1,0 +1,13 @@
+.venv/
+Binary_Drone_Audio/
+Multiclass_Drone_Audio/
+__pycache__/
+*.keras
+*.tflite
+model_output/
+neural_network_drone_detector/Debug/
+neural_network_drone_detector/Release/
+*.o
+*.elf
+*.bin
+*.hex
