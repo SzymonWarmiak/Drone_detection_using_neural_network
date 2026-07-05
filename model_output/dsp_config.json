@@ -1,0 +1,13 @@
+{
+  "sample_rate": 16000,
+  "frame_size": 1024,
+  "hop_length": 1024,
+  "n_mels": 20,
+  "fmin": 80.0,
+  "fmax": 8000.0,
+  "power": 2.0,
+  "num_frames": 16,
+  "window": "hann",
+  "center": false,
+  "log_function": "log10(x + 1e-10)"
+}

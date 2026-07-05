@@ -1,0 +1,6 @@
+{
+  "description": "Global log-MFE normalisation for STM32 preprocessing",
+  "mean": -3.4048094749450684,
+  "std": 3.0600388050079346,
+  "formula": "(log10(mel_power + 1e-10) - mean) / std"
+}
