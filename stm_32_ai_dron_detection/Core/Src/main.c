@@ -111,11 +111,23 @@ static void precompute_all(void)
 
 static void compute_mel_frame(const uint16_t *raw, int offset)
 {
-    /* Remove DC bias and apply Hann window */
+    /* Remove DC bias, calculate min/max and apply Hann window */
     float dc = 0.0f;
-    for (int i = 0; i < FRAME_SIZE; i++)
-        dc += (float)raw[offset + i];
+    uint16_t adc_min = raw[offset], adc_max = raw[offset];
+    for (int i = 0; i < FRAME_SIZE; i++) {
+        uint16_t val = raw[offset + i];
+        dc += (float)val;
+        if (val < adc_min) adc_min = val;
+        if (val > adc_max) adc_max = val;
+    }
     dc /= FRAME_SIZE;
+
+    /* Print raw ADC stats once per inference cycle (approx. 1 sec) to avoid UART spam */
+    if (frame_idx == 0) {
+        printf("[ADC] min=%u max=%u avg=%u pp=%u\r\n",
+               (unsigned int)adc_min, (unsigned int)adc_max, 
+               (unsigned int)dc, (unsigned int)(adc_max - adc_min));
+    }
 
     for (int i = 0; i < FRAME_SIZE; i++) {
         fft_re[i] = (((float)raw[offset + i] - dc) / 2048.0f) * hann_win[i];
